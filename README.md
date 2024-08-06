@@ -32,7 +32,7 @@
 | user                 | references| null: false, foreign_key: true|
 | price                | integer   | null: false            |
 | name                 | string    | null: false            |
-| description_of_item  | string    | null: false            |
+| description_of_item  | text      | null: false            |
 | category_id          | integer   | null: false            |
 | status_id            | integer   | null: false            |
 | shipping_method_id   | integer   | null: false            |
@@ -40,7 +40,7 @@
 | estimated_shipping_date_id| integer | null: false         |
 ### Association
 - belongs_to :user
-- belongs_to :history
+- has_one :history
 
 ## histories
 | Column Name          | Data Type | Constraints            |
@@ -49,5 +49,5 @@
 | user                 | references| null: false            |
 ### Association
 - belongs_to :user
-- belongs_to :destination
-- has_many :items
+- has_one :destination
+- belongs_to :items
