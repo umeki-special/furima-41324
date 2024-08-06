@@ -11,14 +11,14 @@
 | birth_day            | date      | null: false            |
 ### Association
 - has_many :items
-- has_many :history
+- has_many :historys
 
 ## destination
 | Column Name          | Data Type | Constraints            |
 |----------------------|-----------|------------------------|
 | post_code            | string    | null: false            |
 | prefecture_id        | integer   | null: false            |
-| city_id              | integer   | null: false            |
+| city_id              | string    | null: false            |
 | address              | string    | null: false            |
 | address2             | string    |                        |
 | phone_number         | string    | null: false            |
@@ -31,17 +31,20 @@
 | user                 | references| null: false            |
 | price                | integer   | null: false            |
 | name                 | string    | null: false            |
+| description_of_item  | string    | null: false            |
 | category_id          | integer   | null: false            |
 | status_id            | integer   | null: false            |
 | shipping_method_id   | integer   | null: false            |
 | region_of_origin_id  | integer   | null: false            |
-| estimated_shipping_date| string  | null: false            |
+| estimated_shipping_date_id| integer | null: false         |
 ### Association
 - belongs_to :user
 
 ## history
 | Column Name          | Data Type | Constraints            |
 |----------------------|-----------|------------------------|
+| item_id              | references| null: false            |
+| destination_id       | references| null: false            |
 | item                 | references| null: false            |
 | user                 | references| null: false            |
 ### Association
