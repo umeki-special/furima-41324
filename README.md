@@ -8,7 +8,7 @@
 | first_name           | string    | null: false            |
 | family_name_kana     | string    | null: false            |
 | first_name_kana      | string    | null: false            |
-| birth_day            | string    | null: false            |
+| birth_day            | date      | null: false            |
 ### Association
 - has_many :items
 - has_many :history
@@ -17,8 +17,10 @@
 | Column Name          | Data Type | Constraints            |
 |----------------------|-----------|------------------------|
 | post_code            | string    | null: false            |
-| city                 | string    | null: false            |
+| prefecture_id        | integer   | null: false            |
+| city_id              | integer   | null: false            |
 | address              | string    | null: false            |
+| address2             | string    |                        |
 | phone_number         | string    | null: false            |
 ### Association
 - belongs_to :user
@@ -29,20 +31,18 @@
 | user                 | references| null: false            |
 | price                | integer   | null: false            |
 | name                 | string    | null: false            |
+| category_id          | integer   | null: false            |
 | status_id            | integer   | null: false            |
-| shipping method_id   | integer   | null: false            |
-| estimated shipping date_id| integer    | null: false      |
-| comment              | text      |                        |
-| favorite_id          | integer   |                        |
-| report_id            | integer   |                        |
+| shipping_method_id   | integer   | null: false            |
+| region_of_origin_id  | integer   | null: false            |
+| estimated_shipping_date| string  | null: false            |
 ### Association
 - belongs_to :user
 
 ## history
 | Column Name          | Data Type | Constraints            |
 |----------------------|-----------|------------------------|
-| item_id              | references| null: false            |
-| item_name            | string    | null: false            |
-| price                | integer   | null: false            |
+| item                 | references| null: false            |
+| user                 | references| null: false            |
 ### Association
 - belongs_to :user
