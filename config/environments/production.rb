@@ -90,4 +90,8 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.after_initialize do
+    ActiveStorage::Current.url_options = { protocol: 'https', host: 'https://furima-41324.onrender.com' }
+  end
 end

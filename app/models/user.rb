@@ -13,4 +13,6 @@ class User < ApplicationRecord
   validates :birth_day, presence: true
   validates :password, format: { with: VALID_PASSWORD_REGEX }
 
+  has_many :items
+  
 end

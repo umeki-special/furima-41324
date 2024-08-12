@@ -4,22 +4,29 @@ class ItemsController < ApplicationController
     @item = Item.new
   end
 
+  def show
+    @item = Item.find_by(id: params[:id])
+    unless @item
+      redirect_to items_path, alert: "Item not found"
+    end
+  end
+
   def create
-    @item = Item.new(item_params)
+    @item = current_user.items.build(item_params)
     if @item.save
-      redirect_to @item, notice: '商品が作成されました。'
+      redirect_to root_path, notice: '商品が作成されました。'
     else
       render :new
     end
   end
 
   def index
-    # 必要に応じてインスタンス変数などを定義
+    @items = Item.all
   end
 
   private
 
   def item_params
-    params.require(:item).permit(:name, :description, :price, :image)
+    params.require(:item).permit(:name, :description_of_item, :price, :image, :category_id, :status_id, :shipping_method_id, :region_of_origin_id, :estimated_shipping_date_id)
   end
 end
