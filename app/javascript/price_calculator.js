@@ -1,29 +1,18 @@
-window.addEventListener('load', function(){
-  const price = () => {
-    const priceInput = document.getElementById('price-content');
-    const addTaxPrice = document.getElementById('add-tax-price');
-    const profit = document.getElementById('profit');
-    console.log(priceInput);
+const price = () => {
 
-    if (priceInput) {
-      priceInput.addEventListener('input', () => {
-        const price = parseInt(priceInput.value, 10);
+  const priceInput = document.getElementById("price_calculator");
+  priceInput.addEventListener("input", () => {
+    const inputValue = priceInput.value;
 
-        if (isNaN(price) || price < 300) {
-          addTaxPrice.textContent = '';
-          profit.textContent = '';
-        } else {
-          const tax = Math.floor(price * 0.1);
-          const profitAmount = price - tax;
+    const addTaxDom = Math.floor(inputValue * 0.1);
+    const addTaxDomElement = document.getElementById("add-tax-price");
+    addTaxDomElement.textContent = addTaxDom;
 
-          addTaxPrice.textContent = tax;
-          profit.textContent = profitAmount;
-        }
-      });
-    }
-  };
-  price();
-})
+    const salesProfit = Math.floor(inputValue * 0.9);
+    const salesProfitElement = document.getElementById("profit");
+    salesProfitElement.textContent = salesProfit;
+  });
+};
 
 window.addEventListener("turbo:load", price);
 window.addEventListener("turbo:render", price);
