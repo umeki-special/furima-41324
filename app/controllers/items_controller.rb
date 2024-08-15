@@ -6,12 +6,10 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find_by(id: params[:id])
-    <!--
-    unless @item
-      redirect_to items_path, alert: "Item not found"
-    end
+    # unless @item
+      # redirect_to items_path, alert: "Item not found"
+    # end
   end
-  -->
 
   def create
     @item = current_user.items.build(item_params)
@@ -23,9 +21,7 @@ class ItemsController < ApplicationController
   end
 
   def index
-    <!--
-    @items = Item.all
-    -->
+    # @item = Item.new@items = Item.all
   end
 
   private
