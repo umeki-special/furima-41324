@@ -122,10 +122,10 @@
     新規投稿商品
   </div>
   <ul class='item-lists'>
-    <% if @items.any? %>
-      <% @items.each do |item| %>
-        <li class='list'>
-          <%= link_to item_path(item) do %>
+    <%#  if @items.any? %>
+      <%#  @items.each do |item| %>
+        <li#  class='list'>
+          <%=#  link_to item_path(item) do %>
             <div class='item-img-content'>
               <% if item.image.attached? %>
                 <% begin %>
