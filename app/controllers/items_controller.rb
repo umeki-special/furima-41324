@@ -7,9 +7,6 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find_by(id: params[:id])
-    unless @item
-      redirect_to items_path, alert: "Item not found"
-    end
   end
 
   def create

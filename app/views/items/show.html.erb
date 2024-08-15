@@ -6,18 +6,6 @@
     <h2 class="name">
       <%= @item.name %>
     </h2>
-    <% if @item %>
-      <div class="item-img-content">
-        <%= image_tag @item.image.attached? ? @item.image : "item-sample.png", class: "item-box-img" %>
-        <% if @item.sold %>
-          <div class="sold-out">
-            <span>Sold Out!!</span>
-          </div>
-        <% end %>
-      </div>
-    <% else %>
-      <p>Item not found</p>
-    <% end %>
     <div class="item-price-box">
       <span class="item-price">
         ¥ <%= @item.price %>
@@ -29,13 +17,11 @@
 
     <% if user_signed_in? %>
       <% if @item.user != current_user %>
-        <%= link_to "購入画面に進む", purchase_item_path(@item), class: "item-red-btn" %>
+        <%= link_to "購入画面に進む", '#', class: "item-red-btn" %>
       <% else %>
-        <% if !@item.sold %>
-          <%= link_to "商品の編集", '#', method: :get, class: "item-red-btn" %>
-          <p class="or-text">or</p>
-          <%= link_to "削除", '#', data: { turbo_method: :delete }, class: "item-destroy" %>
-        <% end %>
+        <%= link_to "商品の編集", '#', method: :get, class: "item-red-btn" %>
+        <p class="or-text">or</p>
+        <%= link_to "削除", '#', data: { turbo_method: :delete }, class: "item-destroy" %>
       <% end %>
     <% end %>
 
@@ -105,9 +91,7 @@
       後ろの商品 ＞
     </a>
   </div>
-  <%# 詳細ページで表示されている商品のカテゴリー名を表示しましょう %>
-  <a href="#" class="another-item"><%= "商品のカテゴリー名" %>をもっと見る</a>
-  <%# //詳細ページで表示されている商品のカテゴリー名を表示しましょう %>
+  <a href="/categories/<%= @item.category.id %>" class="another-item"><%= @item.category.name %>をもっと見る</a>
 </div>
 
 <%= render "shared/footer" %>
