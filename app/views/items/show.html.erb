@@ -4,23 +4,19 @@
 <div class="item-show">
   <div class="item-box">
     <h2 class="name">
-      <%= @item.name %>
+      <%= "商品名" %>
     </h2>
-    <% if @item %>
-      <div class="item-img-content">
-        <%= image_tag @item.image.attached? ? @item.image : "item-sample.png", class: "item-box-img" %>
-        <% if @item.sold %>
-          <div class="sold-out">
-            <span>Sold Out!!</span>
-          </div>
-        <% end %>
+    <div class="item-img-content">
+      <%= image_tag "item-sample.png" ,class:"item-box-img" %>
+      <%# 商品が売れている場合は、sold outを表示しましょう %>
+      <div class="sold-out">
+        <span>Sold Out!!</span>
       </div>
-    <% else %>
-      <p>Item not found</p>
-    <% end %>
+      <%# //商品が売れている場合は、sold outを表示しましょう %>
+    </div>
     <div class="item-price-box">
       <span class="item-price">
-        ¥ <%= @item.price %>
+        ¥ 999,999,999
       </span>
       <span class="item-postage">
         <%= "配送料負担" %>
@@ -48,27 +44,27 @@
       <tbody>
         <tr>
           <th class="detail-item">出品者</th>
-          <td class="detail-value"><%= @item.user.nickname %></td>
+          <td class="detail-value"><%= "出品者名" %></td>
         </tr>
         <tr>
           <th class="detail-item">カテゴリー</th>
-          <td class="detail-value"><%= @item.category.name %></td>
+          <td class="detail-value"><%= "カテゴリー名" %></td>
         </tr>
         <tr>
           <th class="detail-item">商品の状態</th>
-          <td class="detail-value"><%= @item.status.name %></td>
+          <td class="detail-value"><%= "商品の状態" %></td>
         </tr>
         <tr>
           <th class="detail-item">配送料の負担</th>
-          <td class="detail-value"><%= @item.shipping_method.name %></td>
+          <td class="detail-value"><%= "発送料の負担" %></td>
         </tr>
         <tr>
           <th class="detail-item">発送元の地域</th>
-          <td class="detail-value"><%= @item.region_of_origin.name %></td>
+          <td class="detail-value"><%= "発送元の地域" %></td>
         </tr>
         <tr>
           <th class="detail-item">発送日の目安</th>
-          <td class="detail-value"><%= @item.estimated_shipping_date.name %></td>
+          <td class="detail-value"><%= "発送日の目安" %></td>
         </tr>
       </tbody>
     </table>
