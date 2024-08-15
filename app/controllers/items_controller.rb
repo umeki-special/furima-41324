@@ -6,10 +6,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-    # @item = Item.find_by(id: params[:id])
-    # unless @item
-      # redirect_to items_path, alert: "Item not found"
-    # end
+    @item = Item.find_by(id: params[:id])
   end
 
   def create
@@ -28,6 +25,6 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :description_of_item, :price, :category_id, :status_id, :shipping_method_id, :region_of_origin_id, :estimated_shipping_date_id).merge(user_id: current_user.id)
+    params.require(:item).permit(:name, :description_of_item, :price, :content, :image, :category_id, :status_id, :shipping_method_id, :region_of_origin_id, :estimated_shipping_date_id).merge(user_id: current_user.id)
   end
 end

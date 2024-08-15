@@ -17,4 +17,7 @@ class Item < ApplicationRecord
   validates :region_of_origin_id, numericality: { other_than: 1 , message: "can't be '---'" }
   validates :estimated_shipping_date_id, numericality: { other_than: 1 , message: "can't be '---'" }
   validates :image, presence: { message: "No image attached. Please select an image" }
+
 end
+
+
