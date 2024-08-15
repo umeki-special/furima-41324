@@ -79,6 +79,17 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors[:image]).to include("No image attached. Please select an image")
       end
+
+      it 'userが紐づいていなければ登録できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors[:user]).to include("must exist")
+      end
+
+      it 'priceに全角文字を含むと登録できない' do
+        @item.price = '３０００'
+        @item.valid?
+        expect(@item.errors[:price]).to include("is not a number")
     end
   end
 end
