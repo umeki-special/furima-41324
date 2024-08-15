@@ -21,7 +21,7 @@
         <%= f.file_field :image, id:"item-image" %>
         <% if @item.image.present? %>
           <div class="existing-image">
-            <%= image_tag url_for(@item.image), alt: "商品画像", class: "item-image-display" %>
+            <%= image_tag url_for(@item.image).variant(resize: '500x500'), alt: "商品画像", class: "item-image-display" %>
           </div>
         <% end %>
       </div>
