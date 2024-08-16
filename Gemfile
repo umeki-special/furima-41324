@@ -88,3 +88,6 @@ gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
 gem 'importmap-rails'
 gem 'pry-rails'
+gem 'payjp'
+gem 'gon'
+

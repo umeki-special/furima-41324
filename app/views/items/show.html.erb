@@ -29,7 +29,7 @@
 
     <% if user_signed_in? %>
       <% if @item.user != current_user %>
-        <%= link_to "購入画面に進む", purchase_item_path(@item), class: "item-red-btn" %>
+        <%= link_to "購入画面に進む", purchase_item_path(@item), data: { turbo: false }, class:"item-red-btn"%>
       <% else %>
         <% if !@item.sold %>
           <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>

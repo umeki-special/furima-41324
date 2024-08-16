@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :items, only: [:index, :show, :new, :create, :destroy, :edit, :update] do
+  resources :items do
     member do
       get 'purchase'  # または post 'purchase' など購入機能に応じて
     end
