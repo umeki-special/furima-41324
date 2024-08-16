@@ -6,16 +6,12 @@
     <h2 class="name">
       <%= @item.name %>
     </h2>
-    <% if @item %>
       <div class="item-img-content">
         <%= image_tag @item.image.attached? ? @item.image : "item-sample.png", class: "item-box-img" %>
           <div class="sold-out">
             <span>Sold Out!!</span>
           </div>
       </div>
-    <% else %>
-      <p>Item not found</p>
-    <% end %>
     <div class="item-price-box">
       <span class="item-price">
         ¥ <%= @item.price %>
@@ -32,7 +28,7 @@
         <% if !@item.sold %>
           <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
           <p class="or-text">or</p>
-          <%= link_to "削除", '#', data: { turbo_method: :delete }, class: "item-destroy" %>
+          <%= link_to "削除", item_path(@item), data: { turbo_method: :delete }, class: "item-destroy" %>
         <% end %>
       <% end %>
     <% end %>
