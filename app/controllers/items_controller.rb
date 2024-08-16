@@ -1,6 +1,8 @@
+# app/controllers/items_controller.rb
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :check_item_owner, only: [:edit, :update]  # アイテムの所有者チェック
 
   def new
     @item = Item.new
@@ -25,7 +27,6 @@ class ItemsController < ApplicationController
 
   def edit
     # @itemはbefore_actionでセットされます
-    # アイテムが存在しない場合の処理を追加することもできます
   end
 
   def update
@@ -46,6 +47,12 @@ class ItemsController < ApplicationController
   def set_item
     @item = Item.find_by(id: params[:id])
     redirect_to root_path, alert: 'アイテムが見つかりません。' unless @item
+  end
+
+  def check_item_owner
+    if @item.user != current_user
+      redirect_to root_path, alert: 'この商品を編集する権限がありません。'
+    end
   end
 
   def item_params
