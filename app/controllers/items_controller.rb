@@ -1,12 +1,13 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
 
   def new
     @item = Item.new
   end
 
   def show
-    @item = Item.find_by(id: params[:id])
+    # @itemはbefore_actionでセットされます
   end
 
   def create
@@ -22,7 +23,30 @@ class ItemsController < ApplicationController
     @items = Item.order(created_at: :desc)  # 新しい順にソート
   end
 
+  def edit
+    # @itemはbefore_actionでセットされます
+    # アイテムが存在しない場合の処理を追加することもできます
+  end
+
+  def update
+    if @item.update(item_params)
+      redirect_to @item, notice: '商品が更新されました。'
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @item.destroy
+    redirect_to root_path, notice: '商品が削除されました。'
+  end
+
   private
+
+  def set_item
+    @item = Item.find_by(id: params[:id])
+    redirect_to root_path, alert: 'アイテムが見つかりません。' unless @item
+  end
 
   def item_params
     params.require(:item).permit(:name, :description_of_item, :price, :content, :image, :category_id, :status_id, :shipping_method_id, :region_of_origin_id, :estimated_shipping_date_id).merge(user_id: current_user.id)
