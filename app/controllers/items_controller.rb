@@ -1,7 +1,7 @@
 # app/controllers/items_controller.rb
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, #:destroy]
+  before_action :set_item, only: [:show, :edit, :update, #:destroy]
   before_action :check_item_owner, only: [:edit, :update]  # アイテムの所有者チェック
 
   def new
@@ -37,10 +37,10 @@ class ItemsController < ApplicationController
     end
   end
 
-  def destroy
-    @item.destroy
-    redirect_to root_path, notice: '商品が削除されました。'
-  end
+  #def destroy
+    #@item.destroy
+    #redirect_to root_path, notice: '商品が削除されました。'
+  #end
 
   private
 
