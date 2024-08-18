@@ -71,5 +71,7 @@ require "active_support/core_ext/integer/time"
   config.after_initialize do
     ActiveStorage::Current.url_options = { protocol: 'http', host: 'localhost', port: 3000 }
   end
-  
+  config.assets.debug = true
+
+
 end
