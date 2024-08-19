@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy, :purchase]
-  before_action :set_item, only: [:show, :edit, :update, :destroy, :purchase]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :check_item_owner, only: [:edit, :update]
+  before_action :find_item, only: :order  # 「find_item」を動かすアクションを限定
 
   def new
     @item = Item.new
@@ -41,15 +42,27 @@ class ItemsController < ApplicationController
     redirect_to root_path, notice: '商品が削除されました。'
   end
 
-  def purchase
-    if @item.sold?
-      redirect_to @item, alert: 'この商品は既に売却済みです。'
-    elsif @item.user == current_user
-      redirect_to @item, alert: '自分の商品は購入できません。'
-    else
-      @order = Order.new
-      render 'orders/index'
-    end
+  def order
+    redirect_to new_card_path and return unless current_user.card.present?
+
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"] # 環境変数を読み込む
+    customer_token = current_user.card.customer_token # ログインしているユーザーの顧客トークンを定義
+    Payjp::Charge.create(
+      amount: @item.price, # 商品の値段
+      customer: customer_token, # 顧客のトークン
+      currency: 'jpy' # 通貨の種類（日本円）
+    )
+
+    ItemOrder.create(item_id: params[:id]) # 商品のid情報を「item_id」として保存する
+    
+    redirect_to root_path
+
+  end
+
+  private
+
+  def find_item
+    @item = Item.find(params[:id]) # 購入する商品を特定
   end
 
   private

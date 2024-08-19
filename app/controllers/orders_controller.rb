@@ -3,14 +3,17 @@ class OrdersController < ApplicationController
 
   def index
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-    @order = Order.new
+    @order_form = OrderForm.new(
+      item_id: @item.id,
+      user_id: current_user.id
+    )
   end
 
   def create
-    @order = Order.new(order_params.merge(price: @item.price))
-    if @order.valid?
+    @order_form = OrderForm.new(order_form_params)
+    if @order_form.valid?
       pay_item
-      @order.save
+      @order_form.save
       redirect_to root_path
     else
       gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
@@ -18,22 +21,29 @@ class OrdersController < ApplicationController
     end
   end
 
+  #def new
+    #@order_form = OrderForm.new
+  #end
+
   private
 
   def set_item
     @item = Item.find(params[:item_id])
   end
 
-  def order_params
-    params.require(:order).permit(:postal_code, :prefecture, :city, :address, :building, :phone_number).merge(token: params[:token])
+  def order_form_params
+    params.require(:order_form).permit(
+      :post_code, :prefecture_id, :city, :address, :address2, :phone_number, :item_id, :user_id, :token
+    )
   end
 
   def pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
-      amount: @item.price, # @item.price を使用
+      amount: @item.price,
       card: params[:token],
       currency: 'jpy'
     )
   end
+
 end

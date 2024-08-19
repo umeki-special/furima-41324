@@ -1,11 +1,8 @@
+# app/models/order.rb
 class Order < ApplicationRecord
-  attr_accessor :price, :token
+  belongs_to :item
+  belongs_to :user
+  has_one :history
 
-  validates :price, presence: true
-  validates :token, presence: true
-  validates :postal_code, presence: true
-  validates :prefecture, presence: true
-  validates :city, presence: true
-  validates :address, presence: true
-  validates :phone_number, presence: true
+  validates :price, :item, :user, presence: true
 end
