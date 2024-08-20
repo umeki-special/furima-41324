@@ -1,15 +1,14 @@
 class OrdersController < ApplicationController
-  before_action :set_item, only: [:index, :create]
+  before_action :set_item, only: [:show, :edit]
 
   def index
+    @item = Item.find(params[:item_id])
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-    @order_form = OrderForm.new(
-      item_id: @item.id,
-      user_id: current_user.id
-    )
+    @order_form = OrderForm.new
   end
 
   def create
+    @item = Item.find(params[:item_id])
     @order_form = OrderForm.new(order_form_params)
     if @order_form.valid?
       pay_item
@@ -21,9 +20,11 @@ class OrdersController < ApplicationController
     end
   end
 
-  #def new
-    #@order_form = OrderForm.new
-  #end
+  def edit
+  end
+
+  def show
+  end
 
   private
 
@@ -33,16 +34,17 @@ class OrdersController < ApplicationController
 
   def order_form_params
     params.require(:order_form).permit(
-      :post_code, :prefecture_id, :city, :address, :address2, :phone_number, :item_id, :user_id, :token
-    )
+      :post_code, :prefecture_id, :city, :address, :address2, :phone_number, :price
+    ).merge(token: params[:token], item_id: params[:item_id], user_id: params[:user_id])
   end
 
   def pay_item
+    binding.pry
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
-      amount: @item.price,
-      card: params[:token],
-      currency: 'jpy'
+      amount: order_form_params[:price],   # 商品の値段
+      card: order_form_params[:token],    # カードトークン
+      currency: 'jpy'                 # 通貨の種類（日本円）
     )
   end
 

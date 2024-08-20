@@ -7,7 +7,7 @@ class Item < ApplicationRecord
   belongs_to_active_hash :region_of_origin
   belongs_to_active_hash :estimated_shipping_date
   has_one_attached :image
-  has_one :item_order
+  has_one :history
 
   validates :name, presence: true, length: { maximum: 40 }
   validates :description_of_item, presence: true, length: { maximum: 1000 }
