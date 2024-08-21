@@ -2,7 +2,6 @@
 FactoryBot.define do
   factory :item do
     association :user  # User を関連付ける
-
     name { "Sample Item" }
     description_of_item { "This is a sample item description." }
     price { 300 }
