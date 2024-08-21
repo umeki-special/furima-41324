@@ -8,7 +8,7 @@
     </h2>
     <div class="item-img-content">
       <%= image_tag @item.image.attached? ? @item.image : "item-sample.png", class: "item-box-img" %>
-      <% if @item.sold %>
+      <% if @item.history.present? %>
         <div class="sold-out">
           <span>Sold Out!!</span>
         </div>

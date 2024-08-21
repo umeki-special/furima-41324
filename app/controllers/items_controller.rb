@@ -74,8 +74,8 @@ class ItemsController < ApplicationController
   end
 
   def check_item_owner
-    if @item.user != current_user
-      redirect_to root_path, alert: 'この商品を編集する権限がありません。'
+      if @item.user_id == current_user.id || @item.history != nil
+      redirect_to root_path
     end
   end
 

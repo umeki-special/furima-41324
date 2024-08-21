@@ -1,8 +1,9 @@
 class OrdersController < ApplicationController
-  before_action :set_item, only: [:show, :edit]
+  before_action :authenticate_user!
+  before_action :set_item, only: [:show, :edit, :index, :create] # indexアクションにも適用
+  before_action :login_user, only: :index
 
   def index
-    @item = Item.find(params[:item_id])
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @order_form = OrderForm.new
   end
@@ -13,7 +14,6 @@ class OrdersController < ApplicationController
 
 
   def create
-    @item = Item.find(params[:item_id])
     @order_form = OrderForm.new(order_form_params)
     if @order_form.valid?
       pay_item
@@ -35,6 +35,11 @@ class OrdersController < ApplicationController
 
   def set_item
     @item = Item.find(params[:item_id])
+  end
+
+  def login_user
+    return unless @item.history.present? || current_user.id == @item.user_id
+    redirect_to root_path
   end
 
   def order_form_params
