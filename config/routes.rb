@@ -3,7 +3,6 @@ Rails.application.routes.draw do
 
   root to: 'items#index'
 
-  # items リソース内の orders リソースとカスタムアクション
   resources :items do
     resources :orders
   end

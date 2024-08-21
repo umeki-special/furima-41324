@@ -1,7 +1,7 @@
 class OrderForm
   include ActiveModel::Model
 
-  attr_accessor :post_code, :prefecture_id, :city, :address, :address2, :phone_number, :item_id, :user_id, :token
+  attr_accessor :post_code, :prefecture_id, :city, :building, :address, :address2, :phone_number, :item_id, :user_id, :token
 
   # バリデーションの設定
   with_options presence: true do
@@ -21,6 +21,7 @@ class OrderForm
       city: city,
       address: address,
       address2: address2,
+      building: building,
       phone_number: phone_number,
       history_id: history.id
     )

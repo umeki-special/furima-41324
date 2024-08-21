@@ -12,6 +12,10 @@ class ItemsController < ApplicationController
     # @itemはbefore_actionでセットされます
   end
 
+  def edit
+    # @itemはbefore_actionでセットされます
+  end
+
   def create
     @item = current_user.items.build(item_params)
     if @item.save
@@ -25,9 +29,6 @@ class ItemsController < ApplicationController
     @items = Item.order(created_at: :desc)  # 新しい順にソート
   end
 
-  def edit
-    # @itemはbefore_actionでセットされます
-  end
 
   def update
     if @item.update(item_params)
@@ -38,8 +39,10 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item.destroy
-    redirect_to root_path, notice: '商品が削除されました。'
+    if current_user.id == @item.user_id
+      @item.destroy
+    end
+      redirect_to root_path
   end
 
   def order
@@ -64,8 +67,6 @@ class ItemsController < ApplicationController
   def find_item
     @item = Item.find(params[:id]) # 購入する商品を特定
   end
-
-  private
 
   def set_item
     @item = Item.find_by(id: params[:id])
