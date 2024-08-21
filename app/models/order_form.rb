@@ -5,13 +5,14 @@ class OrderForm
 
   # バリデーションの設定
   with_options presence: true do
-    validates :post_code
     validates :prefecture_id
     validates :city
     validates :address
-    validates :phone_number
     validates :token
   end
+  validates :post_code, presence: true, format: { with: /\A\d{3}-\d{4}\z/, message: "is invalid. Enter it as 123-4567." }
+  validates :phone_number, presence: true, numericality: { only_integer: true }, length: { in: 10..11 }, format: { with: /\A[0-9]+\z/, message: "is invalid. Input only number without hyphen." }
+
 
   def save
     history = History.create(item_id: item_id, user_id: user_id)
