@@ -24,10 +24,10 @@
     </div>
 
     <% if user_signed_in? %>
-      <% if @item.user != current_user %>
+      <% if @item.user != current_user && !@item.history %>
         <%= link_to "購入画面に進む", item_orders_path(@item), data: { turbo: false }, class: "item-red-btn" %>
       <% else %>
-        <% if !@item.sold %>
+        <% if !@item.sold&& !@item.history %>
           <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
           <p class="or-text">or</p>
           <%= link_to "削除", item_path(@item), data: { turbo_method: :delete }, class: "item-destroy" %>

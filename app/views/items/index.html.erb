@@ -136,7 +136,7 @@
               <% else %>
                 <%= image_tag "item-sample.png", class: "item-img" %>
               <% end %>
-              <% if @order_forms.present? %>
+              <% if item.history.present? %>
                 <div class='sold-out'>
                   <span>Sold Out!!</span>
                 </div>
