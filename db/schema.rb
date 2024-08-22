@@ -41,13 +41,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_19_115804) do
 
   create_table "destinations", charset: "utf8", force: :cascade do |t|
     t.string "post_code", null: false
-    t.bigint "history_id", null: false
     t.integer "prefecture_id", null: false
     t.string "city", null: false
-    t.string "building"
     t.string "address", null: false
     t.string "address2"
     t.string "phone_number", null: false
+    t.bigint "history_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["history_id"], name: "index_destinations_on_history_id"
@@ -83,8 +82,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_19_115804) do
 
   create_table "orders", charset: "utf8", force: :cascade do |t|
     t.integer "price", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", charset: "utf8", force: :cascade do |t|

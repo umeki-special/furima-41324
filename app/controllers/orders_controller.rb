@@ -38,13 +38,16 @@ class OrdersController < ApplicationController
   end
 
   def login_user
-    return unless @item.history.present? || current_user.id == @item.user_id
-    redirect_to root_path
+    if @item.history.present? && current_user.id != @item.user_id
+      redirect_to root_path
+    elsif current_user.id == @item.user_id
+      redirect_to root_path
+    end
   end
 
   def order_form_params
     params.require(:order_form).permit(
-      :post_code, :prefecture_id, :city, :address, :address2, :phone_number, :price, :building
+      :post_code, :prefecture_id, :city, :address, :phone_number, :price
     ).merge(token: params[:token], user_id: current_user.id, item_id: @item.id)
   end
 
