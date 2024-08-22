@@ -8,11 +8,6 @@ class OrdersController < ApplicationController
     @order_form = OrderForm.new
   end
 
-  def new
-    @order_form = OrderForm.new
-  end
-
-
   def create
     @order_form = OrderForm.new(order_form_params)
     if @order_form.valid?
@@ -25,12 +20,6 @@ class OrdersController < ApplicationController
     end
   end
 
-  def edit
-  end
-
-  def show
-  end
-
   private
 
   def set_item
@@ -38,12 +27,11 @@ class OrdersController < ApplicationController
   end
 
   def login_user
-    if @item.history.present? && current_user.id != @item.user_id
-      redirect_to root_path
-    elsif current_user.id == @item.user_id
+    if @item.history.present? || current_user.id == @item.user_id
       redirect_to root_path
     end
   end
+
 
   def order_form_params
     params.require(:order_form).permit(

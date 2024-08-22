@@ -10,7 +10,6 @@ class CreateItems < ActiveRecord::Migration[7.0]
       t.integer :shipping_method_id, null: false
       t.integer :region_of_origin_id, null: false
       t.integer :estimated_shipping_date_id, null: false
-      t.boolean :sold, default: false, null: false  # ここでsoldカラムを追加
       t.timestamps
     end
   end
