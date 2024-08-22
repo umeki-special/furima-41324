@@ -1,14 +1,18 @@
-# app/controllers/items_controller.rb
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
-  before_action :check_item_owner, only: [:edit, :update]  # アイテムの所有者チェック
+  before_action :check_item_owner, only: [:edit, :update]
+  before_action :find_item, only: :order  # 「find_item」を動かすアクションを限定
 
   def new
     @item = Item.new
   end
 
   def show
+    # @itemはbefore_actionでセットされます
+  end
+
+  def edit
     # @itemはbefore_actionでセットされます
   end
 
@@ -25,9 +29,6 @@ class ItemsController < ApplicationController
     @items = Item.order(created_at: :desc)  # 新しい順にソート
   end
 
-  def edit
-    # @itemはbefore_actionでセットされます
-  end
 
   def update
     if @item.update(item_params)
@@ -38,8 +39,10 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item.destroy
-    redirect_to root_path, notice: '商品が削除されました。'
+    if current_user.id == @item.user_id
+      @item.destroy
+    end
+      redirect_to root_path
   end
 
   private
@@ -50,8 +53,8 @@ class ItemsController < ApplicationController
   end
 
   def check_item_owner
-    if @item.user != current_user
-      redirect_to root_path, alert: 'この商品を編集する権限がありません。'
+      if @item.user_id == current_user.id || @item.history != nil
+      redirect_to root_path
     end
   end
 

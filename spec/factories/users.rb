@@ -1,14 +1,13 @@
 FactoryBot.define do
   factory :user do
-    nickname              { Faker::Name.initials(number: 2) }
-    email                 { Faker::Internet.unique.email }  # Ensure unique email
-    password              { 'Password1' }  # Valid password
-    password_confirmation { password }
-    
-    family_name           { Faker::Name.last_name }
-    first_name            { Faker::Name.first_name }
-    family_name_kana      { Faker::Name.last_name.tr('一-龥々', 'ァ-ヶ') }
-    first_name_kana       { Faker::Name.first_name.tr('一-龥々', 'ァ-ヶ') }
-    birth_day             { Faker::Date.birthday(min_age: 18, max_age: 65) }
+    nickname { 'valid' } # ここでの長さが6文字以内であることを確認
+    sequence(:email) { |n| "user#{n}@example.com" }
+    password { "password123" }
+    password_confirmation { "password123" }
+    family_name { "山田" }
+    first_name { "太郎" }
+    family_name_kana { "ヤマダ" }
+    first_name_kana { "タロウ" }
+    birth_day { "2000-01-01" }
   end
 end
