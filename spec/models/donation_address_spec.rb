@@ -27,31 +27,31 @@ RSpec.describe OrderForm, type: :model do
       it 'post_codeが空だと保存できないこと' do
         @order_form.post_code = nil
         @order_form.valid?
-        expect(@order_form.errors[:post_code]).to include("を入力してください")
+        expect(@order_form.errors.full_messages).to include("Post code can't be blank")
       end
 
       it 'prefecture_idが空だと保存できないこと' do
         @order_form.prefecture_id = nil
         @order_form.valid?
-        expect(@order_form.errors[:prefecture_id]).to include("を入力してください")
+        expect(@order_form.errors.full_messages).to include("Prefecture can't be blank")
       end
     
       it 'cityが空だと保存できないこと' do
         @order_form.city = nil
         @order_form.valid?
-        expect(@order_form.errors[:city]).to include("を入力してください")
+        expect(@order_form.errors.full_messages).to include("City can't be blank")
       end
     
       it 'addressが空だと保存できないこと' do
         @order_form.address = nil
         @order_form.valid?
-        expect(@order_form.errors[:address]).to include("を入力してください")
+        expect(@order_form.errors.full_messages).to include("Address can't be blank")
       end
     
       it 'phone_numberが空だと保存できないこと' do
         @order_form.phone_number = nil
         @order_form.valid?
-        expect(@order_form.errors[:phone_number]).to include("を入力してください")
+        expect(@order_form.errors.full_messages).to include("Phone number can't be blank")
       end
     end
   end
