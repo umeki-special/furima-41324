@@ -23,7 +23,6 @@ class OrderForm
       prefecture_id: prefecture_id,
       city: city,
       address: address,
-      address2: address2,
       building: building,
       phone_number: phone_number,
       history_id: history.id
