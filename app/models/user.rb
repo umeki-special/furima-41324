@@ -16,6 +16,6 @@ class User < ApplicationRecord
   validates :email, uniqueness: true  # Ensure uniqueness validation is present
 
   has_many :items
-  has_many :orders
+  has_many :historys
 
 end
