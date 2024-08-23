@@ -2,18 +2,10 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :check_item_owner, only: [:edit, :update]
-  before_action :find_item, only: :order  # 「find_item」を動かすアクションを限定
+  before_action :find_item, only: :order  
 
   def new
     @item = Item.new
-  end
-
-  def show
-    # @itemはbefore_actionでセットされます
-  end
-
-  def edit
-    # @itemはbefore_actionでセットされます
   end
 
   def create
@@ -53,7 +45,7 @@ class ItemsController < ApplicationController
   end
 
   def check_item_owner
-      if @item.user_id == current_user.id || @item.history != nil
+    unless @item.user_id == current_user.id
       redirect_to root_path
     end
   end
