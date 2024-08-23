@@ -14,32 +14,14 @@ class OrderForm
   end
   validates :prefecture_id, numericality: { other_than: 1, message: "must be selected" }
 
-  def create
-    @order_form = OrderForm.new(order_form_params)
-    if @order_form.valid?
-      pay_item
-      if @order_form.save
-        redirect_to root_path
-      else
-        gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-        render 'index', status: :unprocessable_entity
-      end
-    else
-      gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-      render 'index', status: :unprocessable_entity
-    end
-  end
-
   def save
     history = History.create(item_id: item_id, user_id: user_id)
-    Destination.create(
-      post_code: post_code,
-      prefecture_id: prefecture_id,
-      city: city,
-      address: address,
-      building: building,
-      phone_number: phone_number,
-      history_id: history.id
-    )
+    if history.persisted?
+      # Destination の作成を削除
+      true
+    else
+      Rails.logger.error("Failed to create History record: #{history.errors.full_messages.join(', ')}")
+      false
+    end
   end
 end
