@@ -83,7 +83,7 @@
             <label class="form-text">都道府県</label>
             <span class="indispensable">必須</span>
           </div>
-          <%= f.collection_select(:prefecture_id, RegionOfOrigin.all, :id, :name, { prompt: '選択してください' }, { class: "select-box", id: "prefecture_id" }) %>
+          <%= f.collection_select(:prefecture_id, RegionOfOrigin.all, :id, :name, {}, { class: "select-box", id: "prefecture_id" }) %>
         </div>
         <div class="form-group">
           <div class='form-text-wrap'>
