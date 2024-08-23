@@ -9,6 +9,10 @@ class Item < ApplicationRecord
   has_one_attached :image
   has_one :history
 
+  def sold?
+    history.present?
+  end
+
   validates :name, presence: true, length: { maximum: 40 }
   validates :description_of_item, presence: true, length: { maximum: 1000 }
   validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
